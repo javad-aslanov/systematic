@@ -27,4 +27,4 @@ Start the development server with:
 yarn run dev
 ```
 
-This will launch the project in development mode.
+This will launch the project in development mode. The project should be running on localhost:3000
