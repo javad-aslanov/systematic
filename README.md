@@ -1,76 +1,30 @@
-# Systematic
-Required dependencies:
-@clerk/nextjs
-@clerk/themes
-@dnd-kit/core
-@dnd-kit/modifiers
-@dnd-kit/sortable
-@dnd-kit/utilities
-@hookform/resolvers
-@radix-ui/react-accordion
-@radix-ui/react-alert-dialog
-@radix-ui/react-aspect-ratio
-@radix-ui/react-avatar
-@radix-ui/react-checkbox
-@radix-ui/react-collapsible
-@radix-ui/react-context-menu
-@radix-ui/react-dialog
-@radix-ui/react-dropdown-menu
-@radix-ui/react-hover-card
-@radix-ui/react-icons
-@radix-ui/react-label
-@radix-ui/react-menubar
-@radix-ui/react-navigation-menu
-@radix-ui/react-popover
-@radix-ui/react-progress
-@radix-ui/react-radio-group
-@radix-ui/react-scroll-area
-@radix-ui/react-select
-@radix-ui/react-separator
-@radix-ui/react-slider
-@radix-ui/react-slot
-@radix-ui/react-switch
-@radix-ui/react-tabs
-@radix-ui/react-toast
-@radix-ui/react-toggle
-@radix-ui/react-toggle-group
-@radix-ui/react-tooltip
-@tabler/icons-react
-@tailwindcss/postcss
-@tanstack/react-table
-class-variance-authority
-clsx
-cmdk
-date-fns
-eslint
-eslint-config-next
-input-otp
-kbar
-lucide-react
-match-sorter
-motion
-next
-next-themes
-nextjs-toploader
-nuqs
-postcss
-react
-react-day-picker
-react-dom
-react-dropzone
-react-hook-form
-react-resizable-panels
-react-responsive
-recharts
-sharp
-sonner
-sort-by
-tailwind-merge
-tailwindcss
-tailwindcss-animate
-typescript
-uuid
-vaul
-vercel
-zod
-zustand
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+* [Node.js](https://nodejs.org/) (version 22 suggested)
+* [Yarn](https://yarnpkg.com/) (package manager)
+
+## Installation
+
+1. **Install Yarn** (if you haven't already):
+
+   ```bash
+   npm install --global yarn
+   ```
+
+2. **Install project dependencies**:
+
+   ```bash
+   yarn
+   ```
+
+## Running the Project Locally
+
+Start the development server with:
+
+```bash
+yarn run dev
+```
+
+This will launch the project in development mode.
