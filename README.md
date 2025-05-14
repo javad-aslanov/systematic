@@ -13,7 +13,7 @@ Before you begin, ensure you have the following installed on your system:
    npm install --global yarn
    ```
 
-2. **Install project dependencies**:
+2. **Install project dependencies** (run this in root project directory):
 
    ```bash
    yarn
