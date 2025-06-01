@@ -46,10 +46,10 @@ export function PieGraph() {
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Fraud Cases by Blockchain this Month</CardTitle>
+        <CardTitle>Flagged Incidents</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Distribution of flagged rug pull incidents by blockchain network
+            Distribution of flagged incidents by blockchain network
           </span>
           <span className="@[540px]/card:hidden">
             Rug pull distribution
