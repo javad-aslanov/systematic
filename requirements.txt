@@ -1,0 +1,42 @@
+# Core Trading
+backtrader==1.9.78.123
+hummingbot==202404.0  # Change to latest stable if needed
+
+# API and Backend
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+
+# Data Handling
+pandas==2.2.2
+numpy==1.26.4
+ccxt==4.2.23  # Crypto exchange connectivity
+yfinance==0.2.40
+
+# Plotting (if serving charts)
+matplotlib==3.8.4
+
+# Database (choose as needed)
+sqlalchemy==2.0.30
+psycopg2-binary==2.9.9  # PostgreSQL driver
+# or for MongoDB, uncomment:
+# pymongo==4.7.2
+
+# Async & Requests
+httpx==0.27.0
+requests==2.31.0
+
+# Security & Auth (if needed)
+python-dotenv==1.0.1
+pyjwt==2.8.0
+
+# Utilities
+pytz==2024.1
+python-dateutil==2.9.0.post0
+
+# (Optional) Jupyter for research
+jupyter==1.0.0
+notebook==7.2.0
+
+# (Optional) Celery for async tasks
+# celery==5.4.0
+# redis==5.0.4
