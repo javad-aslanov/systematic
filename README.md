@@ -170,4 +170,26 @@ python main.py
 
 ---
 
+## Sources
+
+The trading algorithms and tools in this platform are inspired by and built upon:
+
+* [Hummingbot Documentation](https://docs.hummingbot.io/)
+* [Backtrader Community & Examples](https://www.backtrader.com/docu/)
+* [Binance API Documentation](https://binance-docs.github.io/apidocs/spot/en/)
+* [Coinbase API Documentation](https://docs.cloud.coinbase.com/exchange/docs)
+* [QuantInsti Blog on Strategy Design](https://blog.quantinsti.com/)
+* \[Medium articles from Superalgos, Hummingbot Academy, and Quantitative Finance community]
+* [CryptoCompare API](https://min-api.cryptocompare.com/)
+* [Kaiko Data API (for research purposes)](https://www.kaiko.com/)
+* Various GitHub open-source repositories under MIT/Apache licenses, including:
+
+  * `hummingbot/hummingbot`
+  * `mementum/backtrader`
+  * `jesse-ai/jesse` (as inspiration for strategy templates)
+
+> If you are one of the authors and would like to be explicitly credited, feel free to open an issue or pull request.
+
+---
+
 **For more info, see the `/docs` directory or open an issue!**
