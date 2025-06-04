@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Line, LineChart, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { Line, LineChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import {
   Card,
@@ -19,29 +19,6 @@ import {
 
 export const description = 'An interactive line chart with live updates';
 
-// Function to generate data starting from today, minute by minute
-const generateInitialMinuteData = () => {
-  const today = new Date();
-  today.setHours(today.getHours() - 1, today.getMinutes(), 0, 0); // Start of today
-
-  const data = [];
-  // Generate 90 data points (90 minutes)
-  for (let i = 0; i < 60; i++) {
-    const timestamp = new Date(today);
-    timestamp.setMinutes(timestamp.getMinutes() + i);
-
-    data.push({
-      timestamp: timestamp.toISOString(),
-      volatility: Math.floor(Math.random() * (500 - 50 + 1)) + 50,
-      hypeIndex: Math.floor(Math.random() * (550 - 100 + 1)) + 100
-    });
-  }
-
-  return data;
-};
-
-const initialChartData = generateInitialMinuteData();
-
 const chartConfig = {
   views: {
     label: 'Change in Price'
@@ -56,93 +33,58 @@ const chartConfig = {
   }
 } satisfies ChartConfig;
 
-// Function to generate a new timestamp one minute later
-const getNextMinute = (lastTimestamp) => {
-  const date = new Date(lastTimestamp);
-  date.setMinutes(date.getMinutes() + 1);
-  return date.toISOString();
-};
-
-// Function to generate random data within range
-const generateRandomValue = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
 export function BarGraph() {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('volatility');
-
-  const [chartData, setChartData] = React.useState(initialChartData);
-
-  // State for dynamic totals
-  const [dynamicTotals, setDynamicTotals] = React.useState({
-    volatility: initialChartData.reduce((acc, curr) => acc + curr.volatility, 0),
-    hypeIndex: initialChartData.reduce((acc, curr) => acc + curr.hypeIndex, 0)
-  });
-
-  // State for trend indicators
-  const [trends, setTrends] = React.useState({
-    volatility: 0, // 1 for up, -1 for down, 0 for neutral
-    hypeIndex: 0
-  });
-
+  const [chartData, setChartData] = React.useState<any[]>([]);
+  const [dynamicTotals, setDynamicTotals] = React.useState({ volatility: 0, hypeIndex: 0 });
+  const [trends, setTrends] = React.useState({ volatility: 0, hypeIndex: 0 });
   const [isClient, setIsClient] = React.useState(false);
 
-  // Update client-side rendering state
+  // Ensure we're running client-side
   React.useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Effect to add a new datapoint every minute
+  // Fetch chart data from backend
   React.useEffect(() => {
     if (!isClient) return;
 
-    const interval = setInterval(() => {
-      setChartData(prevData => {
-        // Get the last timestamp in the dataset
-        const lastTimestamp = prevData[prevData.length - 1].timestamp;
-        const nextTimestamp = getNextMinute(lastTimestamp);
-
-        // Generate new random values
-        const newVolatilityValue = generateRandomValue(50, 500);
-        const newHypeIndexValue = generateRandomValue(100, 550);
-
-        // Create a new data point
-        const newDataPoint = {
-          timestamp: nextTimestamp,
-          volatility: newVolatilityValue,
-          hypeIndex: newHypeIndexValue
-        };
-
-        // Add new data point and remove the oldest to maintain consistent dataset size
-        const updatedData = [...prevData.slice(1), newDataPoint];
-
-        // Update totals
-        setDynamicTotals(prevTotals => {
-          // Compare with previous last datapoint to determine trend
-          const prevLastPoint = prevData[prevData.length - 1];
-
-          setTrends({
-            volatility: newVolatilityValue > prevLastPoint.volatility ? 1 : newVolatilityValue < prevLastPoint.volatility ? -1 : 0,
-            hypeIndex: newHypeIndexValue > prevLastPoint.hypeIndex ? 1 : newHypeIndexValue < prevLastPoint.hypeIndex ? -1 : 0
-          });
-
-          return {
-            volatility: updatedData.reduce((acc, curr) => acc + curr.volatility, 0),
-            hypeIndex: updatedData.reduce((acc, curr) => acc + curr.hypeIndex, 0)
-          };
-        });
-
-        return updatedData;
-      });
-    }, 60000); // Add new datapoint every minute (60000 ms)
-
+    const fetchChartData = async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/market-metrics");
+        const data = await res.json();
+        setChartData(Array.isArray(data) ? data : []);
+      } catch (error) {
+        setChartData([]);
+      }
+    };
+    fetchChartData();
+    const interval = setInterval(fetchChartData, 60000); // every 1 minute
     return () => clearInterval(interval);
   }, [isClient]);
 
-  if (!isClient) {
-    return null;
-  }
+  // Compute totals and trends after each chartData update
+  React.useEffect(() => {
+    if (!chartData.length) return;
+
+    const volatilityTotal = chartData.reduce((acc, curr) => acc + curr.volatility, 0);
+    const hypeIndexTotal = chartData.reduce((acc, curr) => acc + curr.hypeIndex, 0);
+    setDynamicTotals({ volatility: volatilityTotal, hypeIndex: hypeIndexTotal });
+
+    if (chartData.length > 1) {
+      const prev = chartData[chartData.length - 2];
+      const last = chartData[chartData.length - 1];
+      setTrends({
+        volatility: last.volatility > prev.volatility ? 1 : last.volatility < prev.volatility ? -1 : 0,
+        hypeIndex: last.hypeIndex > prev.hypeIndex ? 1 : last.hypeIndex < prev.hypeIndex ? -1 : 0
+      });
+    } else {
+      setTrends({ volatility: 0, hypeIndex: 0 });
+    }
+  }, [chartData]);
+
+  if (!isClient) return null;
 
   return (
     <Card className="@container/card !pt-3">
@@ -157,15 +99,14 @@ export function BarGraph() {
           </CardDescription>
         </div>
         <div className="flex">
-          {['volatility', 'hypeIndex'].map((key) => {
+          {(['volatility', 'hypeIndex'] as const).map((key) => {
             const chart = key as keyof typeof chartConfig;
-            if (!chart || dynamicTotals[key as keyof typeof dynamicTotals] === 0) return null;
+            if (!chart || dynamicTotals[key] === 0) return null;
 
-            // Get trend direction for current metric
-            const trendDirection = trends[key as keyof typeof trends];
-            let trendColor = "text-gray-500"; // Neutral
+            // Trend styling
+            const trendDirection = trends[key];
+            let trendColor = "text-gray-500";
             let trendIcon = "→";
-
             if (trendDirection > 0) {
               trendColor = "text-green-500";
               trendIcon = "↑";
@@ -186,7 +127,7 @@ export function BarGraph() {
                 </span>
                 <div className="flex items-center">
                   <span className="text-lg leading-none font-bold sm:text-3xl">
-                    {dynamicTotals[key as keyof typeof dynamicTotals]?.toLocaleString()}
+                    {dynamicTotals[key]?.toLocaleString()}
                   </span>
                   <span className={`ml-2 text-lg font-bold ${trendColor}`}>
                     {trendIcon}

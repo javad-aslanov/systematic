@@ -3,7 +3,6 @@
 import { IconTrendingUp, IconTrendingDown } from '@tabler/icons-react';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from 'react';
-
 import {
   Card,
   CardContent,
@@ -27,55 +26,10 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
-// Generate synthetic equity curve data for each strategy
-const generateEquityData = () => {
-  // Shared X-axis labels (months)
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'];
-
-  // Helper: random walk around a trend
-  const randomWalk = (start: number, drift: number, volatility: number) => {
-    let value = start;
-    return months.map((month, index) => {
-      const shock = (Math.random() - 0.5) * volatility;
-      value = Math.max(0, value * (1 + drift + shock));
-      return { month, equity: Number(value.toFixed(2)) };
-    });
-  };
-
-  return {
-    macrossover: {
-      name: 'Moving Average Crossover',
-      color: '#1f77b4',
-      data: randomWalk(100_000, 0.02, 0.03) // modest upward trend, low volatility
-    },
-    meanreversion: {
-      name: 'Mean Reversion',
-      color: '#ff7f0e',
-      data: randomWalk(100_000, 0.015, 0.05) // moderate trend, medium volatility
-    },
-    momentum: {
-      name: 'Momentum Strategy',
-      color: '#2ca02c',
-      data: randomWalk(100_000, 0.025, 0.06) // higher drift, higher volatility
-    },
-    breakout: {
-      name: 'Breakout Strategy',
-      color: '#d62728',
-      data: randomWalk(100_000, 0.01, 0.08) // low drift, high volatility
-    },
-    arbitrage: {
-      name: 'Statistical Arbitrage',
-      color: '#9467bd',
-      data: randomWalk(100_000, 0.018, 0.04) // moderate drift and volatility
-    }
-  };
-};
-
-const equityData = generateEquityData();
-
 export function EquityCurveGraph() {
-  const [selectedStrategy, setSelectedStrategy] = useState('macrossover');
-  const [chartData, setChartData] = useState(equityData.macrossover.data);
+  const [equityData, setEquityData] = useState<any>(null);
+  const [selectedStrategy, setSelectedStrategy] = useState<string>('macrossover');
+  const [chartData, setChartData] = useState<any[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [performanceTrend, setPerformanceTrend] = useState({
     change: 0,
@@ -87,31 +41,43 @@ export function EquityCurveGraph() {
     setIsClient(true);
   }, []);
 
-  // Update chart data and compute performance trend when strategy changes
+  // Fetch graph data from backend
   useEffect(() => {
-    if (!isClient) return;
+    const fetchGraph = async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/equity-curve");
+        const data = await res.json();
+        setEquityData(data);
+        setSelectedStrategy(Object.keys(data)[0]); // Default to first strategy
+      } catch (error) {
+        setEquityData(null);
+      }
+    };
+    fetchGraph();
+  }, []);
 
-    const data = equityData[selectedStrategy].data;
+  // Update chart data and performance trend when data/strategy changes
+  useEffect(() => {
+    if (!isClient || !equityData) return;
+    const data = equityData[selectedStrategy]?.data || [];
     setChartData(data);
 
-    const firstValue = data[0].equity;
-    const lastValue = data[data.length - 1].equity;
-    const change = lastValue - firstValue;
-
-    setPerformanceTrend({
-      change: Math.abs(Number(change.toFixed(2))),
-      positive: change >= 0
-    });
-  }, [selectedStrategy, isClient]);
+    if (data.length > 1) {
+      const firstValue = data[0].equity;
+      const lastValue = data[data.length - 1].equity;
+      const change = lastValue - firstValue;
+      setPerformanceTrend({
+        change: Math.abs(Number(change.toFixed(2))),
+        positive: change >= 0
+      });
+    }
+  }, [selectedStrategy, isClient, equityData]);
 
   // Chart configuration
   const chartConfig: ChartConfig = {
-    equity: {
-      label: 'Equity (USD)'
-    }
+    equity: { label: 'Equity (USD)' }
   };
 
-  // Format numbers as USD currency
   const formatCurrency = (value: number) => {
     if (value < 1_000) {
       return `$${value.toFixed(2)}`;
@@ -119,8 +85,8 @@ export function EquityCurveGraph() {
     return `$${Math.round(value).toLocaleString()}`;
   };
 
-  // Identify maximum drawdown (optional for display)
   const calculateDrawdown = () => {
+    if (!chartData.length) return 0;
     let peak = chartData[0].equity;
     let maxDd = 0;
     chartData.forEach(({ equity }) => {
@@ -133,9 +99,7 @@ export function EquityCurveGraph() {
 
   const maxDrawdown = calculateDrawdown();
 
-  if (!isClient) {
-    return null;
-  }
+  if (!isClient || !equityData) return null;
 
   return (
     <Card className="@container/card">
@@ -221,7 +185,6 @@ export function EquityCurveGraph() {
             Max Drawdown: {maxDrawdown}%
           </div>
         </div>
-
         <ChartContainer config={chartConfig} className="aspect-auto h-[300px] w-full">
           <AreaChart
             data={chartData}
@@ -275,7 +238,7 @@ export function EquityCurveGraph() {
       <CardFooter>
         <div className="flex w-full flex-col sm:flex-row items-start justify-between gap-2 text-sm">
           <div className="text-muted-foreground">
-            Generated by synthetic random-walk model
+            Generated by backend
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
