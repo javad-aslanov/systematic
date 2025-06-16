@@ -104,7 +104,7 @@ Start your Python backend (example):
 
 ```bash
 cd backend
-python main.py
+uvicorn main:app --reload
 ```
 
 ---
