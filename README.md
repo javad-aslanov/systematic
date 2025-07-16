@@ -147,10 +147,13 @@ MIT
 
 ⸻
 
-Credits
-	•	Hummingbot
-	•	Backtrader
-	•	Next.js
-	•	TimescaleDB
-	•	Grafana
+## Credits
+
+This project leverages the following open-source technologies:
+
+- **Hummingbot** – for building and executing arbitrage and market-making strategies
+- **Backtrader** – for backtesting and strategy simulation on historical data
+- **Next.js** – for the frontend framework and server-side rendering
+- **TimescaleDB** – for efficient time-series data storage and analytics
+- **Grafana** – for real-time monitoring and visualization of trading metrics
 
