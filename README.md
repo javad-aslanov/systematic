@@ -43,12 +43,13 @@ This project is a full-stack crypto trading platform designed to deploy trading 
 
 ```bash
 npm install --global yarn
-
+```
 2. Clone the Repository
-
+   
+```bash
 git clone https://github.com/javad-aslanov/systematic
 cd systematic
-
+```
 3. Setup Environment Variables
 
 Copy .env.example to .env in both /frontend and /backend folders.
@@ -59,33 +60,33 @@ Fill in API keys and PostgreSQL/TimescaleDB configs.
 Installing Dependencies
 
 Frontend (Next.js)
-
+```bash
 cd frontend
 yarn install
-
+```
 Backend (Python)
-
+```bash
 cd backend
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-
+```
 
 ⸻
 
 Running the Project Locally
 
 Start Frontend
-
+```bash
 yarn run dev
-
+```
 Project will run at http://localhost:3000
 
 Start Backend
-
+```bash
 cd backend
 python main.py
-
+```
 
 ⸻
 
@@ -152,6 +153,4 @@ Credits
 	•	Next.js
 	•	TimescaleDB
 	•	Grafana
-
-For more information, see the /docs directory or open an issue.
 
