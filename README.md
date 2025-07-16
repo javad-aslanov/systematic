@@ -1,3 +1,5 @@
+
+
 # Crypto Trading Platform - README
 
 This project is a full-stack crypto trading platform designed to deploy trading strategies, execute arbitrage, and trade exclusively Bitcoin (BTC) and Ethereum (ETH). The application combines a modern Next.js front end with a powerful Python backend using Hummingbot and Backtrader for live and backtested trading.
@@ -9,13 +11,6 @@ This project is a full-stack crypto trading platform designed to deploy trading 
 * **Deploy and manage trading strategies** (Momentum, Moving Average, Arbitrage, etc.)
 * **Arbitrage trading** across supported exchanges
 * **Real-time dashboard** with equity curve, blockchain activity, and coin metrics
-* **Market-wide metrics bar chart**: visualization of 24h market-cap % change and Fear & Greed Index (static demo or live toggle)
-* **Blockchain Activity Monitor**:
-
-   * **Unconfirmed Tx (Mempool Size)** – transactions not yet mined, held in the mempool (memory pool of pending txs); signals congestion and fee pressure
-   * **Avg Fee** – average gas price (in Gwei, where 1 Gwei = 10⁻⁹ ETH) or fee rate (in sats/kB, where 1 sat = 10⁻⁸ BTC per kilobyte of transaction data); guides fee settings for timely confirmations
-   * **Block Height** – latest mined block number; ensures you’re on the chain tip and helps detect forks
-   * **Peer Count** – number of connected nodes; reflects network health and data reliability
 * **Backtesting and live trading** using Backtrader and Hummingbot
 * **Supports only Bitcoin and Ethereum**
 * **Monitoring tools** for blockchain activity and trading performance
@@ -24,7 +19,7 @@ This project is a full-stack crypto trading platform designed to deploy trading 
 
 ## Tech Stack
 
-* **Frontend:** [Next.js](https://nextjs.org/) (React, TypeScript, Tailwind, Recharts)
+* **Frontend:** [Next.js](https://nextjs.org/) (React, TypeScript, Tailwind)
 * **Backend:** Python (FastAPI)
 * **Trading Engine:** [Hummingbot](https://hummingbot.org/) (live trading/arbitrage), [Backtrader](https://www.backtrader.com/) (backtesting/simulation)
 * **Data Sources:** Crypto exchange APIs (Binance, Coinbase, etc.), blockchain explorers
@@ -45,13 +40,13 @@ Before you begin, ensure you have the following installed on your system:
 
 1. **Install Yarn** (if you haven't already):
 
-   ```
+   ```bash
    npm install --global yarn
    ```
 
 2. **Install project dependencies** (run this in root project directory):
 
-   ```
+   ```bash
    yarn
    ```
 
@@ -61,7 +56,7 @@ Before you begin, ensure you have the following installed on your system:
 
 ### 1. Clone the repository
 
-```
+```bash
 git clone https://github.com/javad-aslanov/systematic
 cd systematic
 ```
@@ -75,14 +70,14 @@ cd systematic
 
 **Frontend (Next.js):**
 
-```
+```bash
 cd frontend
 yarn install
 ```
 
 **Backend (Python):**
 
-```
+```bash
 cd backend
 python -m venv venv
 source venv/bin/activate
@@ -95,11 +90,11 @@ pip install -r requirements.txt
 
 Start the development server with:
 
-```
+```bash
 yarn run dev
 ```
 
-This will launch the project in development mode. The project should be running on [http://localhost:3000](http://localhost:3000).
+This will launch the project in development mode. The project should be running on [localhost:3000](http://localhost:3000).
 
 ---
 
@@ -107,9 +102,9 @@ This will launch the project in development mode. The project should be running 
 
 Start your Python backend (example):
 
-```
+```bash
 cd backend
-uvicorn main:app --reload
+python main.py
 ```
 
 ---
