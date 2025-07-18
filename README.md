@@ -85,7 +85,7 @@ Project will run at http://localhost:3000
 Start Backend
 ```bash
 cd backend
-python main.py
+uvicorn main:app --reload
 ```
 
 ⸻
