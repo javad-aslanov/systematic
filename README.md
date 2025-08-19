@@ -1,82 +1,70 @@
-
-
 # Crypto Trading Platform - README
 
-This project is a full-stack crypto trading platform designed to deploy trading strategies, execute arbitrage, and trade exclusively Bitcoin (BTC) and Ethereum (ETH). The application combines a modern Next.js front end with a powerful Python backend using Hummingbot and Backtrader for live and backtested trading.
+This project is a full-stack crypto trading platform designed to deploy trading strategies, execute arbitrage, and trade exclusively Bitcoin (BTC) and Ethereum (ETH). It combines a modern **Next.js** frontend with a powerful **Python** backend using **Hummingbot** and **Backtrader**.
 
 ---
 
 ## Features
 
-* **Deploy and manage trading strategies** (Momentum, Moving Average, Arbitrage, etc.)
-* **Arbitrage trading** across supported exchanges
-* **Real-time dashboard** with equity curve, blockchain activity, and coin metrics
-* **Backtesting and live trading** using Backtrader and Hummingbot
-* **Supports only Bitcoin and Ethereum**
-* **Monitoring tools** for blockchain activity and trading performance
+- Deploy and manage strategies (Momentum, Moving Average, Arbitrage, etc.)
+- Arbitrage trading across supported exchanges
+- Real-time dashboard with equity curve, blockchain activity, and coin metrics
+- Backtesting and live trading using Backtrader and Hummingbot
+- Supports only **Bitcoin (BTC)** and **Ethereum (ETH)**
+- Monitoring tools with **Grafana**
+- Paper trading functionality (live simulation without real funds)
 
 ---
 
 ## Tech Stack
 
-* **Frontend:** [Next.js](https://nextjs.org/) (React, TypeScript, Tailwind)
-* **Backend:** Python (FastAPI)
-* **Trading Engine:** [Hummingbot](https://hummingbot.org/) (live trading/arbitrage), [Backtrader](https://www.backtrader.com/) (backtesting/simulation)
-* **Data Sources:** Crypto exchange APIs (Binance, Coinbase, etc.), blockchain explorers
-* **Database:** PostgreSQL or MongoDB (for logs, user strategies, and results)
+- **Frontend**: Next.js (React, TypeScript, Tailwind)
+- **Backend**: Python (FastAPI)
+- **Trading Engine**: Hummingbot (live), Backtrader (backtesting)
+- **Data Sources**: Exchange APIs (Binance, Coinbase, etc.), Blockchain explorers
+- **Database**: TimescaleDB (PostgreSQL)
+- **Monitoring**: Grafana
 
 ---
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed on your system:
-
-* [Node.js](https://nodejs.org/) (version 22 suggested)
-* [Yarn](https://yarnpkg.com/) (package manager)
+- Node.js ≥ 18 (v22 recommended)
+- Yarn
+- Python ≥ 3.9
+- PostgreSQL with TimescaleDB extension
+- Docker (optional for Hummingbot/db deployments)
 
 ---
 
 ## Installation
 
-1. **Install Yarn** (if you haven't already):
+### 1. Install Yarn
 
-   ```bash
-   npm install --global yarn
-   ```
-
-2. **Install project dependencies** (run this in root project directory):
-
-   ```bash
-   yarn
-   ```
-
----
-
-## Getting Started
-
-### 1. Clone the repository
-
+```bash
+npm install --global yarn
+```
+2. Clone the Repository
+   
 ```bash
 git clone https://github.com/javad-aslanov/systematic
 cd systematic
 ```
+3. Setup Environment Variables
 
-### 2. Setup Environment Variables
+Copy .env.example to .env in both /frontend and /backend folders.
+Fill in API keys and PostgreSQL/TimescaleDB configs.
 
-* Copy `.env.example` to `.env` in both `/frontend` and `/backend` folders
-* Add your API keys and config (see respective `.env.example` files)
+⸻
 
-### 3. Install Dependencies
+Installing Dependencies
 
-**Frontend (Next.js):**
-
+Frontend (Next.js)
 ```bash
 cd frontend
 yarn install
 ```
-
-**Backend (Python):**
-
+Backend (Python)
 ```bash
 cd backend
 python -m venv venv
@@ -84,90 +72,88 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
----
+⸻
 
-## Running the Project Locally
+Running the Project Locally
 
-Start the development server with:
-
+Start Frontend
 ```bash
 yarn run dev
 ```
+Project will run at http://localhost:3000
 
-This will launch the project in development mode. The project should be running on [localhost:3000](http://localhost:3000).
-
----
-
-## Running Backend
-
-Start your Python backend (example):
-
+Start Backend
 ```bash
 cd backend
-python main.py
+uvicorn main:app --reload
 ```
 
----
+⸻
 
-## Usage
+Usage
+	•	Log in via the web UI.
+	•	Monitor blockchain and market data in real time via Grafana.
+	•	Deploy or backtest strategies.
+	•	Track equity curves and performance.
+	•	Use paper trading for risk-free strategy testing.
 
-* **Log in** via the web UI.
-* **Monitor market** data and blockchain activity in real time.
-* **Deploy or backtest strategies** through the dashboard.
-* **View results** in the equity curve and activity monitors.
+⸻
 
----
+Project Structure
 
-## Project Structure
+/frontend    # Next.js frontend
+/backend     # FastAPI backend + trading logic
+/strategies  # Backtrader/Hummingbot strategies
+/config      # API keys & settings
+/db          # TimescaleDB schemas/migrations
+/grafana     # Dashboard configurations
 
-```
-/frontend   # Next.js application (UI, dashboards, auth)
-/backend    # Python (API, strategy engine, trading logic)
-/strategies # Custom strategy scripts for Backtrader/Hummingbot
-/config     # Config files (API keys, settings)
-```
 
----
+⸻
 
-## Requirements
+Notes
+	•	Only BTC & ETH supported.
+	•	Arbitrage via Hummingbot’s connectors/templates.
+	•	Backtesting via Backtrader.
+	•	Real-time data logging via TimescaleDB.
+	•	Paper trading available for all strategies.
 
-* Node.js ≥ 18 (22 suggested)
-* Python ≥ 3.9
-* Docker (optional, for Hummingbot deployments)
-* Exchange API accounts for live trading
+⸻
 
----
+Contributing
+	1.	Fork the repo
+	2.	Create a feature branch
 
-## Notes
+git checkout -b feature/fooBar
 
-* Only BTC and ETH are supported for trading and strategy execution.
-* Arbitrage is implemented using Hummingbot's built-in connectors and strategy templates.
-* Backtrader is used for historical data analysis and backtests.
 
----
+	3.	Commit your changes
 
-## Contributing
+git commit -am 'Add some fooBar'
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Open a pull request
 
----
+	4.	Push your branch
 
-## License
+git push origin feature/fooBar
 
-[MIT](LICENSE)
 
----
+	5.	Open a pull request
+
+⸻
+
+License
+
+MIT
+
+⸻
 
 ## Credits
 
-* [Hummingbot](https://hummingbot.org/)
-* [Backtrader](https://www.backtrader.com/)
-* [Next.js](https://nextjs.org/)
+This project leverages the following open-source technologies:
 
----
+- **Hummingbot** – for building and executing arbitrage and market-making strategies
+- **Backtrader** – for backtesting and strategy simulation on historical data
+- **Next.js** – for the frontend framework and server-side rendering
+- **TimescaleDB** – for efficient time-series data storage and analytics
+- **Grafana** – for real-time monitoring and visualization of trading metrics
 
-**For more info, see the `/docs` directory or open an issue!**
