@@ -1,5 +1,3 @@
-Here’s the README in **Markdown** format:
-
 ```markdown
 # Systematic — Frontend (Next.js) & Backend (FastAPI)
 
