@@ -6,11 +6,13 @@ router = APIRouter()
 
 # --- Database Configuration ---
 # Credentials for your TimescaleDB Cloud service
+# --- Timescale Cloud (db-98696) ---
 DB_NAME = "tsdb"
 DB_USER = "tsdbadmin"
-DB_PASSWORD = "fsc6uhepg8u8wgda"
-DB_HOST = "oz7m02mu5o.hm5tdfibxb.tsdb.cloud.timescale.com"
-DB_PORT = "32416"
+DB_PASSWORD = "cm6dubfn1elnkx41"
+DB_HOST = "gut9p6dyhy.hgllnyakjj.tsdb.cloud.timescale.com"
+DB_PORT = 39036
+
 
 @router.get("/market-metrics")
 def get_market_metrics():
