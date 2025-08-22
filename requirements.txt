@@ -33,6 +33,7 @@ importlib_resources
 itsdangerous==2.2.0
 Jinja2
 fastapi[standard]
+"fastapi[standard]"
 jsonpatch
 jsonpointer==2.1
 jsonschema
@@ -103,6 +104,8 @@ wheel==0.45.1
 yfinance==0.2.61
 zipp
 zstandard
+requests
+psycopg2
 
 # --- Optional: only on Python 3.12 (Hummingbot provides wheels for 3.12) ---
 hummingbot ; python_version == "3.12"
