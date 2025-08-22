@@ -1,21 +1,28 @@
-```markdown
-# Systematic — Frontend (Next.js) & Backend (FastAPI)
+````markdown
+# Systematic — FastAPI (Backend) + Next.js (Frontend)
 
-Minimal steps to get the app running locally.
+> Minimal steps to get the app running locally.
+
+![Node >= 20](https://img.shields.io/badge/Node-%E2%89%A520-339933)
+![Python >= 3.10](https://img.shields.io/badge/Python-%E2%89%A53.10-3776AB)
+![FastAPI](https://img.shields.io/badge/FastAPI-🚀-009688)
+![Next.js](https://img.shields.io/badge/Next.js-⚡-000000)
+
+---
 
 ## Prerequisites
-- **Node.js** ≥ 20 (LTS recommended)
+- **Node.js** ≥ 20 (use LTS)
 - **Python** ≥ 3.10
-- **pip** (comes with Python)
-- **Yarn**
+- **pip** (bundled with Python)
+- **Yarn** (one package manager only)
+
+---
 
 ## Repo Layout
-```
-
+```txt
 backend/        # FastAPI app (main.py)
 frontend/       # Next.js app
-env.example.txt # sample envs (copy to your own .env files)
-
+env.example.txt # sample envs (copy to your .env files)
 ````
 
 ---
@@ -31,6 +38,8 @@ cd backend
 python -m venv venv
 # macOS/Linux
 source venv/bin/activate
+# Windows (PowerShell)
+# .\venv\Scripts\Activate.ps1
 
 # Install deps
 pip install --upgrade pip
@@ -41,10 +50,16 @@ pip install -r requirements.txt
 
 # Run the server (auto-reload)
 fastapi dev main.py
-````
+```
 
-* Default URL: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-* Docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+* Default API: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+* OpenAPI docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+> **Note:** If `fastapi` CLI isn’t available, run with Uvicorn instead:
+>
+> ```bash
+> uvicorn main:app --reload --port 8000
+> ```
 
 ---
 
@@ -55,14 +70,29 @@ From the repo root:
 ```bash
 cd frontend
 
-# Use one package manager – here we use Yarn
+# Install deps (Yarn only)
 yarn
+
 # Development
 yarn dev
 ```
 
-* Default URL: [http://localhost:3000](http://localhost:3000)
+* Default app: [http://localhost:3000](http://localhost:3000)
 
-## Hummingbot
+---
 
-See the official [Hummingbot installation and setup guide](https://docs.hummingbot.org/installation/) and install via Docker preferrably.
+## Hummingbot (Optional)
+
+Prefer **Docker**. See the official guide:
+[https://docs.hummingbot.org/installation/](https://docs.hummingbot.org/installation/)
+
+---
+
+## Tips & Troubleshooting
+
+* **Port in use**: change ports (`--port 8001` or `NEXT_PUBLIC_PORT=3001 yarn dev`).
+* **venv not activating (Windows)**: run PowerShell as Admin and `Set-ExecutionPolicy RemoteSigned` (then retry).
+* **ENV files**: if both apps need envs, create `backend/.env` and `frontend/.env.local` from `env.example.txt`.
+
+```
+```
