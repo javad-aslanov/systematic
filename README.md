@@ -70,11 +70,16 @@ From the repo root:
 ```bash
 cd frontend
 
-# Install deps (Yarn only)
-yarn
+# Install deps (creates node_modules/.bin/next)
+npm install
 
-# Development
-yarn dev
+# If it still fails, ensure Next + React are actually deps
+npm i -D next@latest
+npm i react@latest react-dom@latest
+
+# Run
+npm run dev
+
 ```
 
 * Default app: [http://localhost:3000](http://localhost:3000)
