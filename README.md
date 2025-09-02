@@ -71,14 +71,14 @@ From the repo root:
 cd frontend
 
 # Install deps (creates node_modules/.bin/next)
-npm install
+yarn install
 
 # If it still fails, ensure Next + React are actually deps
-npm i -D next@latest
-npm i react@latest react-dom@latest
+yarn i -D next@latest
+yarn i react@latest react-dom@latest
 
 # Run
-npm run dev
+yarn run dev
 
 ```
 
